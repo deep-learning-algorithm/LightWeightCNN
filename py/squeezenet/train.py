@@ -137,7 +137,7 @@ if __name__ == '__main__':
         if name == 'SqueezeNet-18':
             model = SqueezeNet(num_classes=num_classes)
         elif name == 'SqueezeNetBypass':
-            model = SqueezeNetBypass(num_classes=20)
+            model = SqueezeNetBypass(num_classes=num_classes)
         else:
             model = alexnet(num_classes=num_classes)
         model.eval()
