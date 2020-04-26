@@ -1,0 +1,16 @@
+py/lib/__pycache__/
+
+py/.idea
+
+py/data
+
+py/__pycache__/
+
+py/lib/models/__pycache__/
+
+py/lib/utils/__pycache__/
+
+py/data/
+
+py/models/
+
