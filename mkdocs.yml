@@ -30,3 +30,6 @@ extra_javascript:
 # 导航
 nav:
     - Home: index.md
+    - 数据集: dataset.md
+    - SqueezeNet:
+        引言: 'squeezenet/index.md'
