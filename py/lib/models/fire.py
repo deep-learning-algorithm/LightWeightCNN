@@ -25,6 +25,7 @@ class Fire(nn.Module):
         self.expand3x3 = conv_block(squeeze_planes, expand3x3_planes, kernel_size=3, padding=1)
 
     def forward(self, x):
+        assert len(x.shape) == 4
         x = self.squeeze(x)
         return torch.cat([
             self.expand1x1(x),

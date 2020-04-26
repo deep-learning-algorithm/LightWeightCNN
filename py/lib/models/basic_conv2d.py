@@ -28,6 +28,7 @@ class BasicConv2d(nn.Module):
         self.relu = relu_layer(lower=0.1, upper=0.1, inplace=True)
 
     def forward(self, x):
+        assert len(x.shape) == 4
         x = self.conv(x)
         x = self.bn(x)
         return self.relu(x)
