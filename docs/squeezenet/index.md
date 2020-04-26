@@ -15,6 +15,8 @@
 
 ## 实现
 
+参考：[squeezenet.py ](https://github.com/pytorch/vision/blob/master/torchvision/models/squeezenet.py)
+
 实现了`Fire`模块和`SqueezeNet`模型
 
 * `py/lib/models/fire.py`
