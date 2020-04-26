@@ -36,7 +36,7 @@ def load_data(data_root_dir):
     data_loaders = {}
     data_sizes = {}
     for name in ['train', 'test']:
-        data_dir = os.path.join(data_root_dir, name)
+        data_dir = os.path.join(data_root_dir, name + '_imgs')
         # print(data_dir)
 
         data_set = ImageFolder(data_dir, transform=transform)
@@ -57,7 +57,7 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
     acc_dict = {'train': [], 'test': []}
     for epoch in range(num_epochs):
 
-        print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+        print('{} - Epoch {}/{}'.format(model_name, epoch, num_epochs - 1))
         print('-' * 10)
 
         # Each epoch has a training and test phase
@@ -114,7 +114,7 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
         # model = model.to(device)
 
     time_elapsed = time.time() - since
-    print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+    print('Training {} complete in {:.0f}m {:.0f}s'.format(model_name, time_elapsed // 60, time_elapsed % 60))
     print('Best test Acc: {:4f}'.format(best_acc))
 
     # load best model weights
