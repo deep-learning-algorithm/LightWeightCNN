@@ -24,3 +24,13 @@
 
 * `py/lib/models/fire_bypass.py`
 * `py/lib/models/squeeze_net_bypass.py`
+
+## 训练
+
+比较`AlexNet、SqueezeNet、SqueezeNetBypass`
+
+* 数据集：`voc 07+12`
+* 损失函数：交叉熵损失
+* 优化器：`Adam`，学习率`1e-3`
+* 随步长衰减：每隔`4`轮衰减`5%`，学习因子`0.95`
+* 迭代次数：`50`
