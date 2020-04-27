@@ -134,7 +134,7 @@ if __name__ == '__main__':
     res_acc = dict()
     num_classes = 20
     for name in ['SqueezeNetBypass', 'SqueezeNet', 'AlexNet']:
-        if name == 'SqueezeNet-18':
+        if name == 'SqueezeNet':
             model = SqueezeNet(num_classes=num_classes)
         elif name == 'SqueezeNetBypass':
             model = SqueezeNetBypass(num_classes=num_classes)
