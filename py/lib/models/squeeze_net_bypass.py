@@ -22,18 +22,17 @@ class SqueezeNetBypass(nn.Module):
         fire_block = Fire
         fire_bypass_block = FireBypass
 
-
         self.conv1 = conv_block(3, 96, kernel_size=7, stride=2, padding=2)
         self.max_pool = nn.MaxPool2d(3, stride=2)
 
         self.fire2 = fire_block(96, 16, 64, 64)
-        self.fire3 = fire_bypass_block(128, 16, 64, 64)
+        self.fire_bypass3 = fire_bypass_block(128, 16, 64, 64)
         self.fire4 = fire_block(128, 32, 128, 128)
-        self.fire5 = fire_bypass_block(256, 32, 128, 128)
+        self.fire_bypass5 = fire_bypass_block(256, 32, 128, 128)
         self.fire6 = fire_block(256, 48, 192, 192)
-        self.fire7 = fire_bypass_block(384, 48, 192, 192)
+        self.fire_bypass7 = fire_bypass_block(384, 48, 192, 192)
         self.fire8 = fire_block(384, 64, 256, 256)
-        self.fire9 = fire_bypass_block(512, 64, 256, 256)
+        self.fire_bypass9 = fire_bypass_block(512, 64, 256, 256)
         self.conv10 = conv_block(512, num_classes, kernel_size=1)
 
         self.avg_pool = nn.AvgPool2d(13, stride=1)
@@ -47,23 +46,23 @@ class SqueezeNetBypass(nn.Module):
         # N x 96 x 55 x 55
         x = self.fire2(x)
         # N x 128 x 55 x 55
-        x = self.fire3(x)
+        x = self.fire_bypass3(x)
         # N x 128 x 55 x 55
         x = self.fire4(x)
         # N x 256 x 55 x 55
         x = self.max_pool(x)
         # N x 256 x 27 x 27
-        x = self.fire5(x)
+        x = self.fire_bypass5(x)
         # N x 256 x 27 x 27
         x = self.fire6(x)
         # N x 384 x 27 x 27
-        x = self.fire7(x)
+        x = self.fire_bypass7(x)
         # N x 384 x 27 x 27
         x = self.fire8(x)
         # N x 512 x 27 x 27
         x = self.max_pool(x)
         # N x 512 x 13 x 13
-        x = self.fire9(x)
+        x = self.fire_bypass9(x)
         # N x 512 x 13 x 13
         x = self.conv10(x)
         # N x C x 13 x 13
