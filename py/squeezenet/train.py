@@ -126,7 +126,7 @@ if __name__ == '__main__':
     device = util.get_device()
     # device = 'cpu'
 
-    data_loaders, data_sizes = load_data('../data/train_val')
+    data_loaders, data_sizes = load_data('../data/pascal-voc')
     print(data_loaders)
     print(data_sizes)
 
