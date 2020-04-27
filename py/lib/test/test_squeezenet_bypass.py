@@ -19,4 +19,4 @@ def test():
     model = SqueezeNetBypass(num_classes=num_classes)
     outputs = model(x)
 
-    assert outputs.shape == (N, num_classes, 1, 1)
+    assert outputs.shape == (N, num_classes)
