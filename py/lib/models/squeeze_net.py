@@ -66,4 +66,4 @@ class SqueezeNet(nn.Module):
         # N x C x 13 x 13
         x = self.avg_pool(x)
         # N x C x 1 x 1
-        return x
+        return x.squeeze()
