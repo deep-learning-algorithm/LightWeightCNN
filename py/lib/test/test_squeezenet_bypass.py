@@ -12,11 +12,11 @@ from models.squeeze_net_bypass import SqueezeNetBypass
 
 
 def test():
+    N = 8
     num_classes = 20
 
-    x = torch.randn((1, 3, 224, 224))
+    x = torch.randn((N, 3, 224, 224))
     model = SqueezeNetBypass(num_classes=num_classes)
     outputs = model(x)
 
-    assert len(outputs.shape) == 4
-    assert outputs.shape[1] == num_classes
+    assert outputs.shape == (N, num_classes, 1, 1)
