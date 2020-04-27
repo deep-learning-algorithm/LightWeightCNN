@@ -133,7 +133,7 @@ if __name__ == '__main__':
     res_loss = dict()
     res_acc = dict()
     num_classes = 20
-    for name in ['AlexNet', 'SqueezeNet', 'SqueezeNetBypass']:
+    for name in ['SqueezeNetBypass', 'SqueezeNet', 'AlexNet']:
         if name == 'SqueezeNet-18':
             model = SqueezeNet(num_classes=num_classes)
         elif name == 'SqueezeNetBypass':
@@ -145,8 +145,8 @@ if __name__ == '__main__':
         model = model.to(device)
 
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.Adam(model.parameters(), lr=1e-3)
-        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.95)
+        optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
+        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.96)
 
         util.check_dir('../data/models/')
         best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
