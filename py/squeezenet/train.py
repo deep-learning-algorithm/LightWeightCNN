@@ -18,7 +18,8 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
 
-import utils.util as util
+from utils import util
+from utils import metrics
 from models.squeeze_net import SqueezeNet
 from models.squeeze_net_bypass import SqueezeNetBypass
 
@@ -51,10 +52,12 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
     since = time.time()
 
     best_model_weights = copy.deepcopy(model.state_dict())
-    best_acc = 0.0
+    best_top1_acc = 0.0
+    best_top5_acc = 0.0
 
     loss_dict = {'train': [], 'test': []}
-    acc_dict = {'train': [], 'test': []}
+    top1_acc_dict = {'train': [], 'test': []}
+    top5_acc_dict = {'train': [], 'test': []}
     for epoch in range(num_epochs):
 
         print('{} - Epoch {}/{}'.format(model_name, epoch, num_epochs - 1))
@@ -68,7 +71,9 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
                 model.eval()  # Set model to evaluate mode
 
             running_loss = 0.0
-            running_corrects = 0
+            # running_corrects = 0
+            running_top1_acc = 0.0
+            running_top5_acc = 0.0
 
             # Iterate over data.
             for inputs, labels in data_loaders[phase]:
@@ -83,8 +88,13 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
                 with torch.set_grad_enabled(phase == 'train'):
                     outputs = model(inputs)
                     # print(outputs.shape)
-                    _, preds = torch.max(outputs, 1)
+                    # _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels)
+
+                    # compute top-k accuray
+                    topk_list = metrics.topk_accuracy(outputs, labels, topk=(1, 5))
+                    running_top1_acc += topk_list[0]
+                    running_top5_acc += topk_list[1]
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -93,21 +103,27 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
+                # running_corrects += torch.sum(preds == labels.data)
             if phase == 'train':
                 lr_scheduler.step()
 
             epoch_loss = running_loss / data_sizes[phase]
-            epoch_acc = running_corrects.double() / data_sizes[phase]
-            loss_dict[phase].append(epoch_loss)
-            acc_dict[phase].append(epoch_acc)
+            epoch_top1_acc = running_top1_acc / len(data_loaders[phase])
+            epoch_top5_acc = running_top5_acc / len(data_loaders[phase])
 
-            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            loss_dict[phase].append(epoch_loss)
+            top1_acc_dict[phase].append(epoch_top1_acc)
+            top5_acc_dict[phase].append(epoch_top5_acc)
+
+            print('{} Loss: {:.4f} Top-1 Acc: {:.4f} Top-5 Acc: {:.4f}'.format(
+                phase, epoch_loss, epoch_top1_acc, epoch_top5_acc))
 
             # deep copy the model
-            if phase == 'test' and epoch_acc > best_acc:
-                best_acc = epoch_acc
+            if phase == 'test' and epoch_top1_acc > best_top1_acc:
+                best_top1_acc = epoch_top1_acc
                 best_model_weights = copy.deepcopy(model.state_dict())
+            if phase == 'test' and epoch_top5_acc > best_top5_acc:
+                best_top5_acc = epoch_top5_acc
 
         # 每训练一轮就保存
         # util.save_model(model.cpu(), '../data/models/%s_%d.pth' % (model_name, epoch))
@@ -115,11 +131,12 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
 
     time_elapsed = time.time() - since
     print('Training {} complete in {:.0f}m {:.0f}s'.format(model_name, time_elapsed // 60, time_elapsed % 60))
-    print('Best test Acc: {:4f}'.format(best_acc))
+    print('Best test Top-1 Acc: {:4f}'.format(best_top1_acc))
+    print('Best test Top-5 Acc: {:4f}'.format(best_top5_acc))
 
     # load best model weights
     model.load_state_dict(best_model_weights)
-    return model, loss_dict, acc_dict
+    return model, loss_dict, top1_acc_dict, top5_acc_dict
 
 
 if __name__ == '__main__':
@@ -131,7 +148,8 @@ if __name__ == '__main__':
     print(data_sizes)
 
     res_loss = dict()
-    res_acc = dict()
+    res_top1_acc = dict()
+    res_top5_acc = dict()
     num_classes = 20
     for name in ['SqueezeNetBypass', 'SqueezeNet', 'AlexNet']:
         if name == 'SqueezeNet':
@@ -149,16 +167,18 @@ if __name__ == '__main__':
         lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.96)
 
         util.check_dir('../data/models/')
-        best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
-                                                      criterion, optimizer, lr_schduler, num_epochs=50, device=device)
+        best_model, loss_dict, top1_acc_dict, top5_acc_dict = train_model(
+            data_loaders, data_sizes, name, model, criterion, optimizer, lr_schduler, num_epochs=50, device=device)
         # 保存最好的模型参数
         # util.save_model(best_model.cpu(), '../data/models/best_%s.pth' % name)
 
         res_loss[name] = loss_dict
-        res_acc[name] = acc_dict
+        res_top1_acc[name] = top1_acc_dict
+        res_top5_acc[name] = top5_acc_dict
 
         print('train %s done' % name)
         print()
 
     util.save_png('loss', res_loss)
-    util.save_png('acc', res_acc)
+    util.save_png('top-1 acc', res_top1_acc)
+    util.save_png('top-5 acc', res_top5_acc)
