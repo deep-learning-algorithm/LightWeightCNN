@@ -39,10 +39,37 @@
 
 ## 训练结果
 
-* `SqueezeNetByPass`得到`76.94%`的最好测试准确度
-* `SqueezeNet`得到`76.39%`的最好测试准确度
-* `AlexNet`得到`64.99%`的最好测试准确度
-
-![](./imgs/acc.png)
-
 ![](./imgs/loss.png)
+
+![](./imgs/top-1-acc.png)
+
+![](./imgs/top-5-acc.png)
+
+训练日志参考[训练日志](./log2.md)
+
+### 检测精度
+
+* `Top-1 Accuracy`
+  * `SqueezeNetByPass: 77.54%`
+  * `SqueezeNet: 75.46%`
+  * `AlexNet: 68.24%`
+* `Top-1 Accuracy`
+  * `SqueezeNetByPass: 97.41%`
+  * `SqueezeNet: 96.78%`
+  * `AlexNet: 94.22%`
+
+### Flops和参数数目
+
+```
+alexnet: 1.429 GFlops - 233.081 MB
+squeezenet: 1.692 GFlops - 4.793 MB
+squeezenet-bypass: 1.692 GFlops - 4.793 MB
+```
+
+## 小结
+
+| CNN Architecture | Data Type (bit) | Model Size (MB) | GFlops （1080Ti） | Top-1 Acc(VOC 07+12) | Top-5 Acc(VOC 07+12) |
+|:----------------:|:---------------:|:---------------:|:-----------------:|:--------------------:|:--------------------:|
+|      AlexNet     |        32       |     233.081     |       1.429       |        68.24%        |        94.22%        |
+|    SqueezeNet    |        32       |      4.793      |       1.692       |        75.46%        |        96.78%        |
+| SqueezeNetBypass |        32       |      4.793      |       1.692       |        77.54%        |        97.41%        |

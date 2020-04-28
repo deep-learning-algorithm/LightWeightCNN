@@ -33,3 +33,4 @@ nav:
     - 数据集: dataset.md
     - SqueezeNet:
         引言: 'squeezenet/index.md'
+        训练日志: './squeezenet/log2.md'
