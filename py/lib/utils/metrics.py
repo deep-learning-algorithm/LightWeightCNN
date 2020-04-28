@@ -9,7 +9,6 @@
 
 import torch
 from thop import profile
-from torchsummary import summary
 
 from torchvision.models import AlexNet
 from models.squeeze_net import SqueezeNet
@@ -34,6 +33,7 @@ def topk_accuracy(output, target, topk=(1,)):
     :param topk: tuple，计算前top-k的accuracy
     :return: list
     """
+    assert len(output) == 2 and len(output) == len(target)
     maxk = max(topk)
     batch_size = target.size(0)
 
