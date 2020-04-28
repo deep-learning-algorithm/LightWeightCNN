@@ -33,7 +33,7 @@ def topk_accuracy(output, target, topk=(1,)):
     :param topk: tuple，计算前top-k的accuracy
     :return: list
     """
-    assert len(output) == 2 and len(output) == len(target)
+    assert len(output.shape) == 2 and output.shape[0] == target.shape[0]
     maxk = max(topk)
     batch_size = target.size(0)
 
