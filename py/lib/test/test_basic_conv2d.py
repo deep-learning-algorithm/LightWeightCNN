@@ -8,7 +8,7 @@
 """
 
 import torch
-from models.basic_conv2d import BasicConv2d
+from models.squeezenet.basic_conv2d import BasicConv2d
 
 
 def test():

@@ -8,7 +8,7 @@
 """
 
 import torch
-from models.squeeze_net_bypass import SqueezeNetBypass
+from models.squeezenet.squeeze_net_bypass import SqueezeNetBypass
 
 
 def test():

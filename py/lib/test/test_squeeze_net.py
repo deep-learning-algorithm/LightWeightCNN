@@ -8,7 +8,7 @@
 """
 
 import torch
-from models.squeeze_net import SqueezeNet
+from models.squeezenet.squeeze_net import SqueezeNet
 
 
 def test():

@@ -8,7 +8,7 @@
 """
 
 import torch
-from models.fire import Fire
+from models.squeezenet.fire import Fire
 
 
 def test():

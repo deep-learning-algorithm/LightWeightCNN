@@ -10,7 +10,7 @@
 import torch
 import torch.nn as nn
 
-from models.basic_conv2d import BasicConv2d
+from models.squeezenet.basic_conv2d import BasicConv2d
 
 
 class Fire(nn.Module):

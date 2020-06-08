@@ -9,8 +9,8 @@
 
 import torch.nn as nn
 
-from models.basic_conv2d import BasicConv2d
-from models.fire import Fire
+from models.squeezenet.basic_conv2d import BasicConv2d
+from models.squeezenet.fire import Fire
 
 
 class SqueezeNet(nn.Module):
