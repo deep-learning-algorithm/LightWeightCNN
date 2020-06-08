@@ -12,17 +12,27 @@
 
 ## 内容列表
 
-- [背景](#背景)
-- [安装](#安装)
-- [用法](#用法)
-- [主要维护人员](#主要维护人员)
-- [致谢](#致谢)
-- [参与贡献方式](#参与贡献方式)
-- [许可证](#许可证)
+- [LightWeightCNN](#lightweightcnn)
+  - [内容列表](#内容列表)
+  - [背景](#背景)
+  - [安装](#安装)
+    - [文档工具安装](#文档工具安装)
+    - [Python库依赖](#python库依赖)
+  - [用法](#用法)
+    - [文档浏览](#文档浏览)
+  - [主要维护人员](#主要维护人员)
+  - [致谢](#致谢)
+    - [引用](#引用)
+  - [参与贡献方式](#参与贡献方式)
+  - [许可证](#许可证)
 
 ## 背景
 
 * [SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size](https://arxiv.org/abs/1602.07360)
+* [MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications](https://arxiv.org/abs/1704.04861)
+* [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/abs/1801.04381)
+* [ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile](https://arxiv.org/abs/1707.01083)
+* [ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design](https://arxiv.org/abs/1807.11164)
  
 ## 安装
 
@@ -70,6 +80,42 @@ $ pip install -r requirements.txt
     author={Forrest N. Iandola and Song Han and Matthew W. Moskewicz and Khalid Ashraf and William J. Dally and Kurt Keutzer},
     year={2016},
     eprint={1602.07360},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{howard2017mobilenets,
+    title={MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications},
+    author={Andrew G. Howard and Menglong Zhu and Bo Chen and Dmitry Kalenichenko and Weijun Wang and Tobias Weyand and Marco Andreetto and Hartwig Adam},
+    year={2017},
+    eprint={1704.04861},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{s2018mobilenetv2,
+    title={MobileNetV2: Inverted Residuals and Linear Bottlenecks},
+    author={Mark Sandler and Andrew Howard and Menglong Zhu and Andrey Zhmoginov and Liang-Chieh Chen},
+    year={2018},
+    eprint={1801.04381},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{zhang2017shufflenet,
+    title={ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices},
+    author={Xiangyu Zhang and Xinyu Zhou and Mengxiao Lin and Jian Sun},
+    year={2017},
+    eprint={1707.01083},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{ma2018shufflenet,
+    title={ShuffleNet V2: Practical Guidelines for Efficient CNN Architecture Design},
+    author={Ningning Ma and Xiangyu Zhang and Hai-Tao Zheng and Jian Sun},
+    year={2018},
+    eprint={1807.11164},
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
